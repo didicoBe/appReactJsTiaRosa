@@ -55,39 +55,9 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
 export default function Header() {
    
-
-    const Logado = ()=>(
-        firebase.auth().onAuthStateChanged(function(user) {
-            
-            if (user) {
-               
-                return( 
-                <Button color="inherit">
-                    Logado
-                </Button> 
-            );
-            } else {
-                
-                return( 
-                <Button color="inherit">
-                    <a href={`/login`} className={classes.link}>
-                        Login
-                    </a>
-                </Button> 
-                );
-            }
-            })
-    )
     
-
-
-
-
-
-
     const classes = useStyles();
 
     const [state, setState] = React.useState({
@@ -95,7 +65,29 @@ export default function Header() {
         left: false,
         bottom: false,
         right: false,
+        logado:false,
+        texto:'Login',
+        url:'/login'
     });
+
+    const Logado = ()=>(
+        firebase.auth().onAuthStateChanged(function(user) {
+            
+            if (user) {
+                console.log("aqui");
+                setState({
+                    logado:true,
+                    texto:"User"
+                })
+            } else {
+                setState({
+                    logado:false,
+                    texto:"Login",
+                    url:'/login'
+                })
+            }
+        })
+    )
 
     const toggleDrawer = (anchor, open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -186,7 +178,11 @@ export default function Header() {
                             Tia Rosa Salgados
                         </a>
                     </Typography>
-                    <Logado/>
+                    <Button color="inherit">
+                        <a href={state.url} className={classes.link}>
+                            {state.texto}
+                        </a>
+                    </Button> 
                 </Toolbar>
             </AppBar>
         </div>
