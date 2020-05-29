@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
 import './style.css';
 import firebase from '../../firebase';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -18,7 +19,8 @@ export default class Login extends Component {
 
     state={
         email:'',
-        senha:''
+        senha:'',
+        logado: false
     }
 
     ChangeHandler = (event) => {
@@ -36,19 +38,23 @@ export default class Login extends Component {
 
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.senha).then(user => {
             console.log(user)
+            this.setState({logado:true})
         }).catch(
             erro => {
                 console.log(erro)
+                this.setState({logado:false})
             }
         )
     }
 
 
     render() {
-       
-        
-        return (
+       if (this.state.logado === true) {
+          return (<Redirect to="/"/> )
+       }else{
+            return (
             <div>
+              
             <Container className={'marginTopo'}>
                 <form className='' noValidate autoComplete="off">
 
@@ -83,5 +89,8 @@ export default class Login extends Component {
             </Container>
         </div>
         );
+       }
+        
+       
     }
 }

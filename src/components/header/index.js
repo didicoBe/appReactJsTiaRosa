@@ -18,6 +18,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import HomeIcon from '@material-ui/icons/Home';
 
+
+import firebase from '../../firebase';
+
 import './style.css';
 
 
@@ -54,6 +57,37 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function Header() {
+   
+
+    const Logado = ()=>(
+        firebase.auth().onAuthStateChanged(function(user) {
+            
+            if (user) {
+               
+                return( 
+                <Button color="inherit">
+                    Logado
+                </Button> 
+            );
+            } else {
+                
+                return( 
+                <Button color="inherit">
+                    <a href={`/login`} className={classes.link}>
+                        Login
+                    </a>
+                </Button> 
+                );
+            }
+            })
+    )
+    
+
+
+
+
+
+
     const classes = useStyles();
 
     const [state, setState] = React.useState({
@@ -144,19 +178,15 @@ export default function Header() {
             </div>
             <AppBar position="fixed" className={classes.topcolor}>
                 <Toolbar>
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
-                    <MenuIcon />
-                </IconButton>
+                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
+                        <MenuIcon />
+                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         <a href={`/`} className={classes.link}>
                             Tia Rosa Salgados
                         </a>
                     </Typography>
-                    <Button color="inherit">
-                        <a href={`/login`} className={classes.link}>
-                            Login
-                        </a>
-                    </Button>
+                    <Logado/>
                 </Toolbar>
             </AppBar>
         </div>
