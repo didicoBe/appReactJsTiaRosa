@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@bit/davidhu2000.react-spinners.climbing-box-loader": "file:./components/climbing-box-loader"
+  },
+  "bit": {
+    "env": {},
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
+  }
+}
