@@ -1,11 +1,33 @@
 a {
-    color: #ffffff;
-    text-decoration: none;
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
+
+.root {
+    flex-grow: 1,
 }
 
-a:hover 
-{
-     color:#ffffff; 
-     text-decoration:none; 
-     cursor:pointer;  
+.menuButton {
+    margin-right: 2px,
+}
+
+.title {
+    flex-grow:2,
+}
+
+.topcolor {
+    background-color:'#f44336'
+}
+
+.list {
+    width: 250px,
+}
+
+.fullList {
+  width: 'auto',
+}
+
+.titleMenu{
+    padding:10px,
+    font
 }

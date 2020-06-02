@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
@@ -6,6 +7,10 @@ import IconButton  from "@material-ui/core/IconButton/IconButton";
 import Typography  from "@material-ui/core/Typography/Typography";
 import Button  from "@material-ui/core/Button/Button";
 import MenuIcon  from "@material-ui/icons/Menu";
+
+import { withStyles } from '@material-ui/styles';
+import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom'
 
 
 import clsx from 'clsx';
@@ -24,167 +29,198 @@ import firebase from '../../firebase';
 import './style.css';
 
 
-
-
-// import { Container } from './styles';
-const useStyles = makeStyles((theme) => ({
+const  useStyles = theme => ({
     root: {
-      flexGrow: 1,
-    },
-    menuButton: {
-      marginRight: theme.spacing(2),
-    },
-    title: {
-      flexGrow:2,
-    },
-    topcolor: {
-        backgroundColor:'#f44336'
-    },
-    list: {
-        width: 250,
+        flexGrow: 1,
       },
-    fullList: {
-    width: 'auto',
-    },
-    titleMenu:{
-        padding:10,
-        fontSize:16
-    }
-}));
+      menuButton: {
+        marginRight: 2,
+      },
+      title: {
+        flexGrow:2,
+      },
+      topcolor: {
+          backgroundColor:'#f44336'
+      },
+      list: {
+          width: 250,
+        },
+      fullList: {
+      width: 'auto',
+      },
+      titleMenu:{
+          padding:10,
+          fontSize:16
+      }
+})
 
 
 
 
-export default function Header() {
-   
+
+class Header extends Component {
     
-    const classes = useStyles();
+    constructor(props){
+        super(props);
+        this.state = {
+            top: false,
+            left: false,
+            bottom: false,
+            right: false,
+            logado:false,
+            texto:'Login',
+            url:'/login' 
+        }
+      }
+   
 
-    const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
-        logado:false,
-        texto:'Login',
-        url:'/login'
-    });
 
-    const Logado = ()=>(
-        firebase.auth().onAuthStateChanged(function(user) {
-            
+    Logado = ()=>{ 
+               
+        firebase.auth().onAuthStateChanged((user)=>{
             if (user) {
-                console.log("aqui");
-                setState({
+                console.log(user);
+                console.log('logado');
+                this.setState({
                     logado:true,
-                    texto:"User"
-                })
-            } else {
-                setState({
+                    texto:"Admin",
+                    url:'/admin'
+                });
+            }else{
+                this.setState({
                     logado:false,
                     texto:"Login",
                     url:'/login'
-                })
-            }
-        })
-    )
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-        return;
+                });
+            }      
+            }) 
+            
+           
         }
 
-        setState({ ...state, [anchor]: open });
-    };
 
-    const list = (anchor) => (
-        <div
-        className={clsx(classes.list, {
-            [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-        })}
-        role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
-        >
-        <List>
-            <Typography variant="h6" className={classes.titleMenu}>
-               Menu
-            </Typography>
-            <ListItem button >
-                <ListItemIcon> <HomeIcon/> </ListItemIcon>
-                <ListItemText primary={"Home"} />
-            </ListItem>
-            <Divider />
-            <Typography variant="h6" className={classes.titleMenu}>
-                Produtos
-            </Typography>
-            <Divider />
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={"Tapioca"} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Tapioca Doce "} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Lanche natural "} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Pão de batata "} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Enroladinho salgado "} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Mantecal "} />
-            </ListItem>
-            <ListItem button >
-                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                <ListItemText primary={" Goiabinha "} />
-            </ListItem>
 
-        </List>
-        <Divider />
+    componentDidMount(){
+         this.Logado();
+    }
+
+
+    render() {
+
+        
+        const { classes } = this.props;
        
-        </div>
-    );
+        const toggleDrawer = (anchor, open) => (event) => {
+            if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+            }
+    
+            this.setState({ ...this.state, [anchor]: open });
+        };
+    
+        const list = (anchor) => (
+            <div
+            className={clsx(classes.list, {
+                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+            })}
+            role="presentation"
+            onClick={toggleDrawer(anchor, false)}
+            onKeyDown={toggleDrawer(anchor, false)}
+            >
+            <List>
+                <Typography variant="h6" className={classes.titleMenu}>
+                   Menu       
+                </Typography>
+                <a href={'/'}>
+                    <ListItem button >
+                        
+                            <ListItemIcon> <HomeIcon/> </ListItemIcon>
+                            <ListItemText primary={"Home"} />
+                        
+                    </ListItem>
+                </a> 
+                <Divider />
+                <Typography variant="h6" className={classes.titleMenu}>
+                    Produtos
+                </Typography>
+                <Divider />
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={"Tapioca"} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Tapioca Doce "} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Lanche natural "} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Pão de batata "} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Enroladinho salgado "} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Mantecal "} />
+                </ListItem>
+                <ListItem button >
+                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                    <ListItemText primary={" Goiabinha "} />
+                </ListItem>
+    
+            </List>
+            <Divider />
+           
+            </div>
+        );
 
 
+
+        
+
+        return (
+            <div>
+                <div>
+                
+                    <Drawer anchor={'left'} open={this.state['left']} onClose={toggleDrawer('left', false)} >
+                        {list('left')}
+                    </Drawer>
+                    
+                    
+                </div>
+                <AppBar position="fixed" className={classes.topcolor}>
+                    <Toolbar>
+                        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" className={classes.title}>
+                            <a href={`/`} className={classes.link}>
+                                Tia Rosa Salgados
+                            </a>
+                        </Typography>
+                        <Button color="inherit">
+
+                            <a href={this.state.url} className={classes.link}>
+                                {this.state.texto}
+                            </a>
+                        </Button> 
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
 
     
-    return (
-        
-        <div>
-            <div>
-                
-            <Drawer anchor={'left'} open={state['left']} onClose={toggleDrawer('left', false)}>
-                {list('left')}
-            </Drawer>
-                
-                
-            </div>
-            <AppBar position="fixed" className={classes.topcolor}>
-                <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" className={classes.title}>
-                        <a href={`/`} className={classes.link}>
-                            Tia Rosa Salgados
-                        </a>
-                    </Typography>
-                    <Button color="inherit">
-                        <a href={state.url} className={classes.link}>
-                            {state.texto}
-                        </a>
-                    </Button> 
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
 }
+
+
+Header.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+
+export default withStyles(useStyles)(Header);
