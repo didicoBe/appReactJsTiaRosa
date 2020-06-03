@@ -5,6 +5,9 @@ import firebase from '../../../firebase';
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import BccAlert from '@bit/bcc.components.bcc-alert';
 import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -74,8 +77,11 @@ class Criar extends Component {
         
     }
 
+    
     AomudarValor = (event) => {
+        
         let nam = event.target.id;
+        console.log(this.state)
         if (nam === 'Categoria') {
             this.setState({categoria: event.target.value});
         }
@@ -149,12 +155,6 @@ class Criar extends Component {
     }
 
        
-                
-       
-        
-    
-
-
     render() {
         const { classes } = this.props;
         return (
@@ -167,24 +167,27 @@ class Criar extends Component {
                        
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
-                                
-                                    <TextField
-                                    id="standard-select-currency"
-                                    select
-                                    label="Categorias"
-                                    value={this.state.categoria}
-                                    onChange={this.AomudarValor}
+                                <FormControl variant="outlined" className={classes.formControl}>
+                                    <InputLabel >Categorias</InputLabel>
+                                    <Select
+                                    id="Categoria"
                                     variant="outlined"
                                     color="secondary"
+                                    className={'field'}
+                                    defaultValue={this.state.categoria}
+                                    label="Categorias"
                                     >
-                                        <MenuItem value={'Tapioca'}>{'Tapioca'}</MenuItem>
-                                        <MenuItem value={'Tapioca Doce'}>{'Tapioca Doce'}</MenuItem>
-                                        <MenuItem value={'Lanche natural'}>{'Lanche natural'}</MenuItem>
-                                        <MenuItem value={'Pão de batata'}>{'Pão de batata'}</MenuItem>
-                                        <MenuItem value={'Enroladinho salgado'}>{'Enroladinho salgado'}</MenuItem>
-                                        <MenuItem value={'bolachas'}>{'bolachas'}</MenuItem>
-                                    
-                                    </TextField>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Tapioca'})}} value='Tapioca'>{'Tapioca'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Tapioca Doce'})}} value='Tapioca Doce'>{'Tapioca Doce'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Lanche natural'})}} value='Lanche natural'>{'Lanche natural'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Pão de batata'})}} value='Pão de batata'>{'Pão de batata'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Enroladinho salgado'})}} value='Enroladinho salgado'>{'Enroladinho salgado'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Bolachas'})}} value='bolachas'>{'Bolachas'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Bolos'})}} value='Bolos'>{'Bolos'}</MenuItem>
+                                        <MenuItem onClick={e=>{this.setState({ categoria: 'Geladinhos'})}} value='Geladinhos'>{'Geladinhos'}</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                   
                             </Grid>
                             <Grid item xs={6}>
                                 <TextField

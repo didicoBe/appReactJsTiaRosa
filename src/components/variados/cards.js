@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
 
   }));
   
+
+
+
   export default function Cards(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
@@ -73,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
         />
         <CardMedia
           className={classes.media}
-          image="/img/tapioca.jpg"
+          image={props.img}
           title="Paella dish"
         />
         <CardContent>

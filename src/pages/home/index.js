@@ -4,6 +4,7 @@ import  Container  from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 
 
+import firebase from "../../firebase";
 
 
 // import { Container } from './styles';
@@ -15,34 +16,76 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
+
+
+
 export default function Home (){
 
-
-
     
+    const [state, setState] = React.useState({
+        produtos:''
+    });
+
+    const pegaProdutosBase = async ()=>{
+        //get
+        const data = await firebase.firestore().collection('produtos').get();
+    
+        
+        const result = (data.docs.map(doc =>({
+            ...doc.data(),id:doc.id
+            
+        }
+        )))
+    
+        return(
+            
+            setState({
+                produtos:result
+            })
+            
+        )
+
+        
+        
+    }
+    pegaProdutosBase();
     const classes = useStyles();
+
+    const data = Array.from(state.produtos)
+// categoria
+// descricao
+// imagem
+// nome
+// quantidadeEstoque
+// valor
+
     return(
         <div>
             
             <Container className={ classes.marginTopo}>
-                <Cards  avatar="W"   
-                        titulo="Teste" 
-                        subtitulo="sub" 
-                        conteudocartao="aqui vai o texto de baixo" 
-                        titulodescricao="Titulo da descrição" 
-                        conteudodescricao="conteudo da descrição"
-                        id="13"></Cards>
-                <Cards  avatar="JP"   
-                        titulo="Teste2" 
-                        subtitulo="sub2" 
-                        conteudocartao="aqui vai o texto de baixo2" 
-                        titulodescricao="Titulo da descrição2" 
-                        conteudodescricao="conteudo da descrição2"
-                        id="12"></Cards>
-                <Cards></Cards>
-                <Cards></Cards>
-                <Cards></Cards>
-                <Cards></Cards>
+                {data.map(
+                    (doc)=>
+                        (
+                        <div key={doc.id}>
+                        
+                            <Cards  
+                                avatar={doc.categoria}   
+                                titulo={doc.nome} 
+                                subtitulo={doc.categoria}
+                                conteudocartao={doc.descricao}
+                                titulodescricao="Titulo da descrição" 
+                                conteudodescricao="conteudo da descrição"
+                                id={doc.id} 
+                                img={doc.imagem}
+                                ></Cards>
+                            
+                        </div>
+                        )
+                    
+
+                )}
+                
+                
             </Container>
         </div>
     

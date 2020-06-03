@@ -69,7 +69,8 @@ class Header extends Component {
             right: false,
             logado:false,
             texto:'Login',
-            url:'/login' 
+            url:'/login',
+            produtos:'' 
         }
       }
    
@@ -96,18 +97,39 @@ class Header extends Component {
             }) 
             
            
-        }
+    }
 
+
+    pegaProdutosBase = async ()=>{
+        //get
+        const data = await firebase.firestore().collection('produtos').orderBy('categoria').get();
+    
+        
+        const result = (data.docs.map(doc =>({
+            ...doc.data(),id:doc.id
+            
+        }
+        )))
+
+        return(
+            
+            this.setState({
+                produtos:result
+            })
+        )
+        
+    }
 
 
     componentDidMount(){
          this.Logado();
+         this.pegaProdutosBase()    
     }
+
 
 
     render() {
 
-        
         const { classes } = this.props;
        
         const toggleDrawer = (anchor, open) => (event) => {
@@ -117,6 +139,14 @@ class Header extends Component {
     
             this.setState({ ...this.state, [anchor]: open });
         };
+
+
+        
+        const produtos = this.state.produtos
+
+        const data = Array.from(this.state.produtos)
+        console.log(produtos);
+
     
         const list = (anchor) => (
             <div
@@ -144,35 +174,14 @@ class Header extends Component {
                     Produtos
                 </Typography>
                 <Divider />
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={"Tapioca"} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Tapioca Doce "} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Lanche natural "} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Pão de batata "} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Enroladinho salgado "} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Mantecal "} />
-                </ListItem>
-                <ListItem button >
-                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                    <ListItemText primary={" Goiabinha "} />
-                </ListItem>
-    
+                {
+                    data.map((text, index) => (
+                        <ListItem button key={index} >
+                            <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                            <ListItemText primary={text.categoria} />
+                        </ListItem>
+                    ))
+                }
             </List>
             <Divider />
            

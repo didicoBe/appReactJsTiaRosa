@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../../../firebase';
 
-import  {Container, TextField}  from "@material-ui/core";
+import  {Container, TextField,Button }  from "@material-ui/core";
 
 
 import './style.css';
@@ -13,6 +13,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import SaveIcon from '@material-ui/icons/Save';
 
 
 const useStyles = makeStyles({
@@ -24,7 +25,9 @@ const useStyles = makeStyles({
 
 class Estoque extends Component {
     state ={
-        produtos:''
+        produtos:'',
+        novaqnt:'',
+        produtoUnico:''
     }
 
     pegaProdutosBase = async ()=>{
@@ -52,20 +55,29 @@ class Estoque extends Component {
     }
 
     
-
-    updateQuantidade = async(doc)=>{
+    updateQuantidade = async()=>{
         // //update
-        await firebase.firestore().collection('produtos').doc(doc.id).set({
-            nome:doc.nome, 
-            valor:doc.valor,
-            descricao:doc.descricao,
-            imagem:doc.imagem,
-            categoria:doc.categoria,
-            quantidadeEstoque:doc.quantidadeEstoque
-        }).then(()=>{
-            this.pegaProdutosBase()
-        });
 
+        const novaq = this.state.novaqnt
+        const produto = this.state.produtoUnico
+        if(novaq !== ''){
+            const data = await firebase.firestore().collection('produtos').doc(produto.id).set({
+            nome: produto.nome, 
+            valor: produto.valor,
+            descricao:produto.descricao,
+            imagem: produto.imagem,
+            categoria: produto.categoria,
+            quantidadeEstoque: novaq
+             })
+
+            console.log(produto.id);
+            this.pegaProdutosBase();
+            this.setState({
+                novaqnt: '',
+                produtoUnico: ''
+            })
+        }
+        
     }
 
 
@@ -89,8 +101,16 @@ class Estoque extends Component {
                                         }}
                                         variant="outlined"
                                         color="secondary"
-                                        onChange={()=>(this.updateQuantidade(doc))}
-                                        value={doc.quantidadeEstoque}
+                                        id="quantidade"
+                                        onChange={
+                                            e=>{
+                                                this.setState({
+                                                    novaqnt: e.target.value,
+                                                    produtoUnico: doc
+                                                })
+                                            }
+                                        }
+                                        defaultValue={doc.quantidadeEstoque}
                                         className={'tamanho'}
                                     />
                                 </TableCell>
@@ -118,6 +138,17 @@ class Estoque extends Component {
                             </TableBody>
                         </Table>
                     </TableContainer>
+                    <br/>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        onClick={ this.updateQuantidade }
+                        className={classes.button}
+                        startIcon={<SaveIcon />}
+                    >
+                        Salvar
+                    </Button>
                 </Container>
             </div>
         );
