@@ -1,32 +1,22 @@
-import React from 'react';
+import React, { Component } from 'react';
 import  Cards  from "../../components/variados/cards";
 import  Container  from "@material-ui/core/Container";
-import { makeStyles } from '@material-ui/core/styles';
-
 
 import firebase from "../../firebase";
-
-
-// import { Container } from './styles';
-
-const useStyles = makeStyles((theme) => ({
-    marginTopo:{
-        marginTop:75
-    }
-}))
+import './style.css'
 
 
 
 
 
-export default function Home (){
+class Home extends Component {
 
-    
-    const [state, setState] = React.useState({
+    state={
         produtos:''
-    });
+    }
 
-    const pegaProdutosBase = async ()=>{
+
+    pegaProdutosBase = async ()=>{
         //get
         const data = await firebase.firestore().collection('produtos').get();
     
@@ -39,7 +29,7 @@ export default function Home (){
     
         return(
             
-            setState({
+            this.setState({
                 produtos:result
             })
             
@@ -48,47 +38,60 @@ export default function Home (){
         
         
     }
-    pegaProdutosBase();
-    const classes = useStyles();
 
-    const data = Array.from(state.produtos)
-// categoria
-// descricao
-// imagem
-// nome
-// quantidadeEstoque
-// valor
 
-    return(
-        <div>
-            
-            <Container className={ classes.marginTopo}>
-                {data.map(
-                    (doc)=>
-                        (
-                        <div key={doc.id}>
-                        
-                            <Cards  
-                                avatar={doc.categoria}   
-                                titulo={doc.nome} 
-                                subtitulo={doc.categoria}
-                                conteudocartao={doc.descricao}
-                                titulodescricao="Titulo da descrição" 
-                                conteudodescricao="conteudo da descrição"
-                                id={doc.id} 
-                                img={doc.imagem}
-                                ></Cards>
+
+    componentDidMount(){
+        this.pegaProdutosBase()
+        console.log(this.state)
+    }
+
+
+
+
+
+
+
+    render() {
+        const data = ()=> Array.from(this.state.produtos)
+        return (
+            <Container className={'marginTopo'}>
+                {data().map(
+                    (doc)=>{
+
+                        if (doc.quantidadeEstoque > 0) {
+                            return(
+                           
+                                <div key={doc.id}>
+                                
+                                    <Cards  
+                                        avatar={doc.categoria.substring(0,1)}   
+                                        titulo={doc.nome} 
+                                        subtitulo={doc.categoria}
+                                        conteudocartao={doc.descricao}
+                                        titulodescricao="Titulo da descrição" 
+                                        conteudodescricao="conteudo da descrição"
+                                        id={doc.id} 
+                                        quantidade={doc.quantidadeEstoque}
+                                        img={doc.imagem}
+                                        valor={'R$ '+doc.valor}
+                                        ></Cards>
+                                    
+                                </div>
+                                )
                             
-                        </div>
-                        )
-                    
+             
+                        }
 
+
+                    }
+                      
                 )}
                 
                 
             </Container>
-        </div>
-    
-    
-  );
+        );
+    }
 }
+
+export default Home;

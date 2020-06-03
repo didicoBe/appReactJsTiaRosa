@@ -24,8 +24,8 @@ export default class Produto {
     }
     
     componentDidMount(){
-        const {id} = this.props.match.params;
-        console.log(id)
+        const {categoria} = this.props.match.params;
+        console.log(categoria)
         
     }
 

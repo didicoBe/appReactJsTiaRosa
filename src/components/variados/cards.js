@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -7,16 +6,14 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Link } from 'react-router-dom';
+import BubbleChartIcon from '@material-ui/icons/BubbleChart';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
 // import { Container } from './styles';
 
@@ -43,7 +40,14 @@ const useStyles = makeStyles((theme) => ({
     },
     link:{
         all:"unset"
+    },
+    font:{
+      fontSize:16
+    },
+    fontG:{
+      fontSize:25
     }
+    
 
   }));
   
@@ -52,11 +56,7 @@ const useStyles = makeStyles((theme) => ({
 
   export default function Cards(props) {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
-  
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
-    };
+    
   
     return (
       <Card className={classes.root}>
@@ -67,12 +67,13 @@ const useStyles = makeStyles((theme) => ({
             </Avatar>
           }
           action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
+            <IconButton aria-label="settings" className={classes.font}>
+              {props.valor}
             </IconButton>
           }
-          title={props.titulo}
+          title={<div className={classes.fontG}>{props.titulo}</div>}
           subheader={props.subtitulo}
+          
         />
         <CardMedia
           className={classes.media}
@@ -86,34 +87,15 @@ const useStyles = makeStyles((theme) => ({
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="visualizar">
-            <Link className={classes.link} to={`/produtos/${ props.id }`}>
-                <VisibilityOutlinedIcon />
-            </Link>
-           
+                <AddShoppingCartIcon />           
           </IconButton>
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(classes.expand, {
-              [classes.expandOpen]: expanded,
-            })}
-            onClick={handleExpandClick}
-            aria-expanded={expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
+          <IconButton 
+              aria-label="Quantidade"
+              className={clsx(classes.expand)}>
+            <BubbleChartIcon />
+            {props.quantidade}
           </IconButton>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography paragraph>{props.titulodescricao}</Typography>
-            <Typography paragraph>
-                {props.conteudodescricao}
-            </Typography>
-            
-          </CardContent>
-        </Collapse>
       </Card>
     );
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import firebase from '../../../firebase';
 
-import  {Container, TextField,Button }  from "@material-ui/core";
+import  {Container, TextField,Button , Fab}  from "@material-ui/core";
 
 
 import './style.css';
@@ -16,11 +16,16 @@ import Paper from '@material-ui/core/Paper';
 import SaveIcon from '@material-ui/icons/Save';
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme)=> ({
     table: {
       minWidth: 650,
     },
-  });
+    fab: {
+        position: 'absolute',
+        bottom: theme.spacing(2),
+        right: theme.spacing(2),
+      }
+  }))
 
 
 class Estoque extends Component {
@@ -139,17 +144,18 @@ class Estoque extends Component {
                         </Table>
                     </TableContainer>
                     <br/>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        size="large"
-                        onClick={ this.updateQuantidade }
-                        className={classes.button}
-                        startIcon={<SaveIcon />}
-                    >
-                        Salvar
-                    </Button>
+                    
                 </Container>
+                <Fab
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    onClick={ this.updateQuantidade }
+                    className={'botao'}
+                    >
+                        <SaveIcon />
+                        Salvar
+                </Fab>
             </div>
         );
     }

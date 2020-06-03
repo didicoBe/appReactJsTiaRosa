@@ -10,7 +10,7 @@ import MenuIcon  from "@material-ui/icons/Menu";
 
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom'
+import {Link, BrowserRouter} from 'react-router-dom'
 
 
 import clsx from 'clsx';
@@ -102,7 +102,7 @@ class Header extends Component {
 
     pegaProdutosBase = async ()=>{
         //get
-        const data = await firebase.firestore().collection('produtos').orderBy('categoria').get();
+        const data = await firebase.firestore().collection('categorias').orderBy('nome').get();
     
         
         const result = (data.docs.map(doc =>({
@@ -176,9 +176,9 @@ class Header extends Component {
                 <Divider />
                 {
                     data.map((text, index) => (
-                        <ListItem button key={index} >
-                            <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                            <ListItemText primary={text.categoria} />
+                        <ListItem button key={index}>
+                                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                                <ListItemText primary={text.nome} />
                         </ListItem>
                     ))
                 }

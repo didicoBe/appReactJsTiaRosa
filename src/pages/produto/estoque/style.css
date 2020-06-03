@@ -4,3 +4,9 @@
 .tamanho{
     width: 80px;
 }
+.botao{
+    padding-bottom: 150px;
+    position: absolute;
+    bottom: 67px;
+    left:40%
+}
