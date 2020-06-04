@@ -1,5 +1,5 @@
 .topo{
-    margin-top: 75px;
+    margin-top: 275px;
 }
 .modal{
     display: 'flex';
@@ -17,4 +17,7 @@
     font-weight: 500;
     display: inline;
     
+}
+.marginbaixoDeletar{
+    margin-bottom: 100px;
 }

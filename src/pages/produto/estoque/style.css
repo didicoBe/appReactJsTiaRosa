@@ -1,12 +1,13 @@
 .topo{
     margin-top: 75px;
+    margin-bottom: 110px;
+    
 }
 .tamanho{
     width: 80px;
 }
 .botao{
-    padding-bottom: 150px;
-    position: absolute;
-    bottom: 67px;
-    left:40%
+    position: fixed !important;
+    right: 10px;
+    bottom: 75px;
 }

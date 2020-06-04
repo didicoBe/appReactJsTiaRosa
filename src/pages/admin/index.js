@@ -59,6 +59,10 @@ class admin extends Component {
 
                 <div>
                    <Container className={ 'topo'}>
+                        <div className={'titulo'}>
+                            Painel Administrativo
+                            <hr/>
+                        </div>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <Paper elevation={3} className={'papel'}>

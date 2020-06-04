@@ -55,7 +55,10 @@ class Home extends Component {
     render() {
         const data = ()=> Array.from(this.state.produtos)
         return (
-            <Container className={'marginTopo'}>
+            <Container className={'marginTopo marginbaixo' }>
+                <div className={'titulo'}>
+                    Faça seu Pedido
+                </div>
                 {data().map(
                     (doc)=>{
 

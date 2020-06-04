@@ -29,7 +29,14 @@ import './style.css';
 const useStyles = makeStyles({
     table: {
       minWidth: 650,
+      marginTop:75
     },
+    topo:{
+        marginTop:75
+    },
+    baixo:{
+        marginBottom:50
+    }
   });
 
 class Deletar extends Component {
@@ -154,7 +161,7 @@ class Deletar extends Component {
         }
         return (
             
-            <div>
+            <div className={'topo marginbaixoDeletar'}>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
@@ -183,7 +190,7 @@ class Deletar extends Component {
                 </Dialog>
 
 
-                 <Container className={'topo'}>
+                 <Container>
                     <TableContainer component={Paper}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>

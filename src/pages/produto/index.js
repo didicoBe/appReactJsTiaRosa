@@ -1,31 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import  Container  from "@material-ui/core/Container";
 import { makeStyles } from '@material-ui/core/styles';
 
 
 
-// import { Container } from './styles';
-
-const useStyles = makeStyles((theme) => ({
-    marginTopo:{
-        marginTop:75
-    }
-}))
+import './style.css';
 
 
 
-export default class Produto {
+
+export default class Produto extends Component {
     
-    state ={
-        product:{
-            id:''
-        }
-    
-    }
+   
     
     componentDidMount(){
-        const {categoria} = this.props.match.params;
-        console.log(categoria)
+        console.log('aqui')
+        // const {categoria} = this.props.match.params.id;
+        
+        // console.log(categoria)
         
     }
 
@@ -34,12 +26,10 @@ export default class Produto {
     
 
     render(){
-        const {product} = this.state;
-        const classes = useStyles()
         return(
             <div>
-                <Container className={ classes.marginTopo}>
-                       {product.id}
+                <Container className={'topo'}>
+                        aqui
                 </Container>
             </div>
         )

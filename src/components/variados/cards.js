@@ -1,5 +1,5 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -15,9 +15,10 @@ import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
 
-// import { Container } from './styles';
 
-const useStyles = makeStyles((theme) => ({
+
+
+const useStyles = (theme) => ({
     root: {
         marginTop: 20
     },
@@ -49,54 +50,81 @@ const useStyles = makeStyles((theme) => ({
     }
     
 
-  }));
+  });
+
   
+
+class Cards extends Component {
 
 
 
-  export default function Cards(props) {
-    const classes = useStyles();
-    
-  
-    return (
-      <Card className={classes.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              {props.avatar}
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings" className={classes.font}>
-              {props.valor}
-            </IconButton>
-          }
-          title={<div className={classes.fontG}>{props.titulo}</div>}
-          subheader={props.subtitulo}
-          
-        />
-        <CardMedia
-          className={classes.media}
-          image={props.img}
-          title="Paella dish"
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            {props.conteudocartao}
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="visualizar">
-                <AddShoppingCartIcon />           
-          </IconButton>
-          <IconButton 
-              aria-label="Quantidade"
-              className={clsx(classes.expand)}>
-            <BubbleChartIcon />
-            {props.quantidade}
-          </IconButton>
-        </CardActions>
-      </Card>
-    );
-  }
-  
+    addCarrinho= (event)=>{
+        const id = event.target.value
+        const valoratual = localStorage.getItem('carrinho')
+        const novoValor = (parseInt(valoratual) + 1)
+        localStorage.setItem('carrinho',novoValor);   
+        console.log(localStorage);
+      }
+
+
+
+
+
+
+
+
+    render() {
+
+
+      const { classes } = this.props;
+        return (
+            <div>
+                <Card className={classes.root}>
+                    <CardHeader
+                    avatar={
+                        <Avatar aria-label="recipe" className={classes.avatar}>
+                        {this.props.avatar}
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton aria-label="settings" className={classes.font}>
+                        {this.props.valor}
+                        </IconButton>
+                    }
+                    title={<div className={classes.fontG}>{this.props.titulo}</div>}
+                    subheader={this.props.subtitulo}
+                    
+                    />
+                    <CardMedia
+                    className={classes.media}
+                    image={this.props.img}
+                    title="Paella dish"
+                    />
+                    <CardContent>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {this.props.conteudocartao}
+                    </Typography>
+                    </CardContent>
+                    <CardActions disableSpacing>
+
+
+                    <IconButton aria-label="visualizar"
+                        value={this.props.id}
+                        onClick={this.addCarrinho}>
+                            <AddShoppingCartIcon />           
+                    </IconButton>
+
+                    <IconButton 
+                        aria-label="Quantidade"
+                        className={clsx(classes.expand)}>
+                        <BubbleChartIcon />
+                        {this.props.quantidade}
+                    </IconButton>
+                    </CardActions>
+                </Card>
+            </div>
+        );
+    }
+}
+
+export default withStyles(useStyles)(Cards);

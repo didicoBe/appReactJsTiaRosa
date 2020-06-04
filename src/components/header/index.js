@@ -123,7 +123,8 @@ class Header extends Component {
 
     componentDidMount(){
          this.Logado();
-         this.pegaProdutosBase()    
+         this.pegaProdutosBase() 
+         localStorage.setItem('carrinho', 0);   
     }
 
 
@@ -176,10 +177,13 @@ class Header extends Component {
                 <Divider />
                 {
                     data.map((text, index) => (
-                        <ListItem button key={index}>
-                                <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                                <ListItemText primary={text.nome} />
-                        </ListItem>
+                        <a href={'/produto/visualizar/'+text.nome} key={index}>
+                            <ListItem button >
+                                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
+                                    <ListItemText primary={text.nome} />
+                            </ListItem>
+                        </a>
+                       
                     ))
                 }
             </List>

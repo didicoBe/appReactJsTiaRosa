@@ -1,14 +1,19 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import PhoneAndroidIcon from '@material-ui/icons/PhoneAndroid';
-import FacebookIcon from '@material-ui/icons/Facebook';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import Chip from '@material-ui/core/Chip';
 
-const useStyles = makeStyles({
+
+import './style.css'
+
+const useStyles = (theme) =>({
     root: {
       width: 500,
+      
     },
     stickToBottom: {
         width: '100%',
@@ -18,25 +23,59 @@ const useStyles = makeStyles({
   });
 
 
-const Footer = () => {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-    return (
-        <div>
-            <BottomNavigation
-            value={value}
-            onChange={(event, newValue) => {
-                setValue(newValue);
-            }}
-            showLabels
-            className={classes.root ,classes.stickToBottom}
-            >
-                <BottomNavigationAction label="Facebook" icon={<FacebookIcon />} />
-                <BottomNavigationAction label="Ligar" icon={<PhoneAndroidIcon />} />
-                <BottomNavigationAction label="Whatsapp" icon={<WhatsAppIcon />} />
-            </BottomNavigation>
-        </div>
-    );
-};
 
-export default Footer;
+
+class Footer extends Component {
+
+    state={
+        value:'',
+        totalitens:localStorage.getItem('carrinho')
+    }
+
+
+
+    WhatsApp = ()=>{
+        const number = '5511982491715'
+        const message = 'text'
+        //
+        window.open('https://api.whatsapp.com/send?phone=' + number + '&text=%20' + message, '_blank');
+        //return console.log('https://api.whatsapp.com/send?phone=' + number + '&text=%20' + message)
+    }
+
+
+
+
+
+    render() {
+        const { classes } = this.props;
+        return (
+            <div className={'stickToBottom'}>
+                <BottomNavigation
+                value={this.state.value}
+                onChange={(event, newValue) => {
+                    this.setState({
+                        value:newValue
+                    });
+                }}
+                showLabels
+                
+                
+                >
+                    
+                    <BottomNavigationAction 
+                        color="secondary" 
+                        icon={
+                            <Chip variant="outlined" color="secondary" label={this.state.totalitens} icon={<ShoppingBasketIcon />} />
+                        }
+                        onClick={()=>(window.location.replace('/carrinho'))}
+                        />
+                    
+                    <BottomNavigationAction label="Ligar" href="tel:+5511992638184" color="secondary" icon={<PhoneAndroidIcon />} />
+                    <BottomNavigationAction label="Whatsapp" color="secondary" icon={<WhatsAppIcon />} onClick={this.WhatsApp} />
+                </BottomNavigation>
+            </div>
+        );
+    }
+}
+
+export default withStyles(useStyles)(Footer);

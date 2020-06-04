@@ -1,0 +1,5 @@
+.stickToBottom {
+    width: 100% !important;
+    position: fixed !important;
+    bottom: 0 !important;
+  }
