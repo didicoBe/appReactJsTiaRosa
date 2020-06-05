@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import makeStyles from '@material-ui/core/styles/makeStyles';
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import IconButton  from "@material-ui/core/IconButton/IconButton";
@@ -10,7 +9,6 @@ import MenuIcon  from "@material-ui/icons/Menu";
 
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import {Link, BrowserRouter} from 'react-router-dom'
 
 
 import clsx from 'clsx';
@@ -80,8 +78,8 @@ class Header extends Component {
                
         firebase.auth().onAuthStateChanged((user)=>{
             if (user) {
-                console.log(user);
-                console.log('logado');
+                // console.log(user);
+                // console.log('logado');
                 this.setState({
                     logado:true,
                     texto:"Admin",
@@ -124,7 +122,7 @@ class Header extends Component {
     componentDidMount(){
          this.Logado();
          this.pegaProdutosBase() 
-         localStorage.setItem('carrinho', 0);   
+           
     }
 
 
@@ -146,7 +144,7 @@ class Header extends Component {
         const produtos = this.state.produtos
 
         const data = Array.from(this.state.produtos)
-        console.log(produtos);
+        //console.log(produtos);
 
     
         const list = (anchor) => (

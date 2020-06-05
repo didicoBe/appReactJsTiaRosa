@@ -14,7 +14,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -56,14 +57,43 @@ const useStyles = (theme) => ({
 
 class Cards extends Component {
 
+  state={
+    doc:''
+  }
+
+    addCarrinho= (id,doc)=>{
+       
+      const oldItems = JSON.parse(localStorage.getItem('itensCarrinho')) || [];
+
+      const newItem = doc;
+
+      oldItems.push(newItem);  
 
 
-    addCarrinho= (event)=>{
-        const id = event.target.value
+
+
+
+
+
         const valoratual = localStorage.getItem('carrinho')
         const novoValor = (parseInt(valoratual) + 1)
-        localStorage.setItem('carrinho',novoValor);   
-        console.log(localStorage);
+        localStorage.setItem('carrinho',novoValor); 
+        localStorage.setItem('itensCarrinho',JSON.stringify(oldItems));
+        this.setState({
+          doc:doc
+        })
+        toast('Adicionado ao carrinho com sucesso :. ' + doc.nome, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          type:'success'
+          });
+          console.log(localStorage.getItem('carrinho'))
+          console.log(JSON.parse(localStorage.getItem('itensCarrinho')))
       }
 
 
@@ -77,8 +107,23 @@ class Cards extends Component {
 
 
       const { classes } = this.props;
+      
+
         return (
             <div>
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  />
+                  {/* Same as */}
+                  <ToastContainer />
                 <Card className={classes.root}>
                     <CardHeader
                     avatar={
@@ -100,26 +145,28 @@ class Cards extends Component {
                     image={this.props.img}
                     title="Paella dish"
                     />
+
                     <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                        {this.props.conteudocartao}
-                    </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                          {this.props.conteudocartao}
+                      </Typography>
                     </CardContent>
+
                     <CardActions disableSpacing>
 
 
-                    <IconButton aria-label="visualizar"
-                        value={this.props.id}
-                        onClick={this.addCarrinho}>
-                            <AddShoppingCartIcon />           
-                    </IconButton>
+                      <IconButton aria-label="visualizar"
+                              onClick={()=>this.addCarrinho(this.props.id,this.props.doc)}>
+                              <AddShoppingCartIcon />           
+                      </IconButton>
 
-                    <IconButton 
-                        aria-label="Quantidade"
-                        className={clsx(classes.expand)}>
-                        <BubbleChartIcon />
-                        {this.props.quantidade}
-                    </IconButton>
+                      <IconButton 
+                          aria-label="Quantidade"
+                          className={clsx(classes.expand)}>
+                          <BubbleChartIcon />
+                          {this.props.quantidade}
+                      </IconButton>
+
                     </CardActions>
                 </Card>
             </div>

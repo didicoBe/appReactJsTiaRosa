@@ -61,7 +61,6 @@ class Home extends Component {
                 </div>
                 {data().map(
                     (doc)=>{
-
                         if (doc.quantidadeEstoque > 0) {
                             return(
                            
@@ -78,17 +77,13 @@ class Home extends Component {
                                         quantidade={doc.quantidadeEstoque}
                                         img={doc.imagem}
                                         valor={'R$ '+doc.valor}
+                                        doc={doc}
                                         ></Cards>
                                     
                                 </div>
-                                )
-                            
-             
+                            )
                         }
-
-
                     }
-                      
                 )}
                 
                 

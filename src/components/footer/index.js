@@ -65,8 +65,9 @@ class Footer extends Component {
                     <BottomNavigationAction 
                         color="secondary" 
                         icon={
-                            <Chip variant="outlined" color="secondary" label={this.state.totalitens} icon={<ShoppingBasketIcon />} />
+                            <ShoppingBasketIcon />
                         }
+                        label="Carrinho"
                         onClick={()=>(window.location.replace('/carrinho'))}
                         />
                     
