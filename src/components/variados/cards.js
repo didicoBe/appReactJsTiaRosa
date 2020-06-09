@@ -10,11 +10,8 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import MonetizationOnIcon from '@material-ui/icons/MonetizationOn';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -61,40 +58,7 @@ class Cards extends Component {
     doc:''
   }
 
-    addCarrinho= (id,doc)=>{
-       
-      const oldItems = JSON.parse(localStorage.getItem('itensCarrinho')) || [];
-
-      const newItem = doc;
-
-      oldItems.push(newItem);  
-
-
-
-
-
-
-
-        const valoratual = localStorage.getItem('carrinho')
-        const novoValor = (parseInt(valoratual) + 1)
-        localStorage.setItem('carrinho',novoValor); 
-        localStorage.setItem('itensCarrinho',JSON.stringify(oldItems));
-        this.setState({
-          doc:doc
-        })
-        toast('Adicionado ao carrinho com sucesso :. ' + doc.nome, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          type:'success'
-          });
-          console.log(localStorage.getItem('carrinho'))
-          console.log(JSON.parse(localStorage.getItem('itensCarrinho')))
-      }
+    
 
 
 
@@ -111,19 +75,7 @@ class Cards extends Component {
 
         return (
             <div>
-                <ToastContainer
-                  position="top-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  />
-                  {/* Same as */}
-                  <ToastContainer />
+                
                 <Card className={classes.root}>
                     <CardHeader
                     avatar={
@@ -156,7 +108,7 @@ class Cards extends Component {
 
 
                       <IconButton aria-label="visualizar"
-                              onClick={()=>this.addCarrinho(this.props.id,this.props.doc)}>
+                              onClick={this.props.click}>
                               <AddShoppingCartIcon />           
                       </IconButton>
 

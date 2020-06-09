@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import  Container  from "@material-ui/core/Container";
 import { makeStyles,withStyles } from '@material-ui/core/styles';
 import  Cards  from "../../../components/variados/cards";
+import { ToastContainer, toast } from 'react-toastify';
 
 import './style.css';
 import firebase from '../../../firebase'
@@ -48,6 +49,36 @@ class Visualizar extends Component {
         
     }
 
+    addCarrinho= (id,doc)=>{
+       
+        const oldItems = JSON.parse(localStorage.getItem('itensCarrinho')) || [];
+  
+        const newItem = doc;
+  
+        oldItems.push(newItem);  
+  
+  
+          const valoratual = localStorage.getItem('carrinho')
+          const novoValor = (parseInt(valoratual) + 1)
+          localStorage.setItem('carrinho',novoValor); 
+          localStorage.setItem('itensCarrinho',JSON.stringify(oldItems));
+          this.setState({
+            doc:doc
+          })
+          toast('Adicionado ao carrinho com sucesso :. ' + doc.nome, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            type:'success'
+            });
+            console.log(localStorage.getItem('carrinho'))
+            console.log(JSON.parse(localStorage.getItem('itensCarrinho')))
+        }
+
 
 
     render() {
@@ -55,6 +86,19 @@ class Visualizar extends Component {
         const data = ()=> Array.from(this.state.produtos)
         return (
             <div>
+                <ToastContainer
+                  position="top-right"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                  />
+                  {/* Same as */}
+                  <ToastContainer />
                <Container className={'topo'}>
                         <div className={'titulo'}>
                             {this.state.categoria}
@@ -78,6 +122,7 @@ class Visualizar extends Component {
                                                 quantidade={doc.quantidadeEstoque}
                                                 img={doc.imagem}
                                                 valor={'R$ '+doc.valor}
+                                                click={()=>this.addCarrinho(doc.id,doc)}
                                                 ></Cards>
                                             
                                         </div>
