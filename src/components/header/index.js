@@ -20,6 +20,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import HomeIcon from '@material-ui/icons/Home';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 
 import firebase from '../../firebase';
@@ -36,20 +40,49 @@ const  useStyles = theme => ({
       },
       title: {
         flexGrow:2,
+        
       },
       topcolor: {
-          backgroundColor:'#f44336'
+          backgroundColor:'#ffff',
+          boxShadow:'0 0 black',
+          color:'#ecb2b2',
+          height:70
+         
+          
       },
       list: {
           width: 250,
         },
       fullList: {
-      width: 'auto',
+          width: 'auto',
       },
       titleMenu:{
-          padding:10,
-          fontSize:16
+          padding:20,
+          fontSize:25,
+          fontWeight:'300',
+          color:'#ecb2b2',
+          
+          
+      },
+      link:{
+        fontWeight:'300'
+      },
+      top:{
+          marginTop: 10
+      },
+      primary:{
+          fontSize:20,
+          fontWeight:'200',
+          color:'#c5837b',
+          marginLeft: 20
+
+      },
+      ico:{
+        fontSize:20,
+        fontWeight:'200',
+        color:'#c5837b',
       }
+
 })
 
 
@@ -163,22 +196,21 @@ class Header extends Component {
                 <a href={'/'}>
                     <ListItem button >
                         
-                            <ListItemIcon> <HomeIcon/> </ListItemIcon>
-                            <ListItemText primary={"Home"} />
+                            <ListItemText primary={"Home"} className={ classes.primary} />
                         
                     </ListItem>
                 </a> 
-                <Divider />
+                
                 <Typography variant="h6" className={classes.titleMenu}>
-                    Produtos
+                    Categorias
                 </Typography>
-                <Divider />
+                
                 {
                     data.map((text, index) => (
                         <a href={'/produto/visualizar/'+text.nome} key={index}>
                             <ListItem button >
-                                    <ListItemIcon> <RestaurantIcon /></ListItemIcon>
-                                    <ListItemText primary={text.nome} />
+                                    <ListItemIcon> <FavoriteBorderIcon className={ classes.ico} /></ListItemIcon>
+                                    <ListItemText primary={text.nome} className={ classes.primary}/>
                             </ListItem>
                         </a>
                        
@@ -205,19 +237,19 @@ class Header extends Component {
                     
                 </div>
                 <AppBar position="fixed" className={classes.topcolor}>
-                    <Toolbar>
+                    <Toolbar className={classes.top}>
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
-                            <MenuIcon />
+                            <MenuOpenIcon />
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>
                             <a href={`/`} className={classes.link}>
-                                Tia Rosa Salgados
+                                Rosa Doces
                             </a>
                         </Typography>
                         <Button color="inherit">
 
                             <a href={this.state.url} className={classes.link}>
-                                {this.state.texto}
+                                {this.state.logado ?   <SettingsIcon/>: <AccountCircleIcon/>}
                             </a>
                         </Button> 
                     </Toolbar>

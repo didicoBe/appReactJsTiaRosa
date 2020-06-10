@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import  Cards  from "../../components/variados/cards";
-import  Container  from "@material-ui/core/Container";
+import  {Container,Typography}  from "@material-ui/core";
 import { ToastContainer, toast } from 'react-toastify';
+import  CardHorizontal from "../../components/variados/cardHorizontal";
 
 import firebase from "../../firebase";
 import './style.css'
-import Calculardistancia from '../../calculardistancia'
 
 
 
@@ -16,7 +16,8 @@ class Home extends Component {
     state={
         produtos:'',
         userLat : '',
-        userLon: ''
+        userLon: '',
+        distancia : ''
     }
 
 
@@ -43,24 +44,32 @@ class Home extends Component {
         
     }
 
-    Dist(lat1, lon1, lat2, lon2)
+    Dist(lat1, lon1, lat2, lon2, unit)
     {
-        const rad = function(x) {return x*Math.PI/180;}
-
-        var R     = 6378.137;                  //Raio da Terra no km (WGS84)
-        var dLat  = rad( lat2 - lat1 );
-        var dLong = rad( lon2 - lon1 );
-
-        var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        var d = R * c;
-
-        return d.toFixed(2);                   //Retorno 3 casas decimais
+        if ((lat1 == lat2) && (lon1 == lon2)) {
+            return 0;
+        }
+        else {
+            var radlat1 = Math.PI * lat1/180;
+            var radlat2 = Math.PI * lat2/180;
+            var theta = lon1-lon2;
+            var radtheta = Math.PI * theta/180;
+            var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+            if (dist > 1) {
+                dist = 1;
+            }
+            dist = Math.acos(dist);
+            dist = dist * 180/Math.PI;
+            dist = dist * 60 * 1.1515;
+            if (unit=="K") { dist = dist * 1.609344 }
+            if (unit=="N") { dist = dist * 0.8684 }
+            return dist.toFixed(2);
+        }               //Retorno 3 casas decimais
     }
 
     componentDidMount(){
-        var lat = '-23.5554093'
-        var lon = '-46.7381878'
+        var lat = '-23.551326'
+        var lon = '-46.740460'
         navigator.geolocation.getCurrentPosition(function(position) {
                 lat = position.coords.latitude
                 lon = position.coords.longitude
@@ -68,14 +77,14 @@ class Home extends Component {
                 localStorage.setItem('userlon',lon); 
           })
 
-          this.setState({
+          
+
+        const distanciaKM = this.Dist(lat,lon,localStorage.getItem('userlat'),localStorage.getItem('userlon'),'K')
+        this.setState({
             userLat:localStorage.getItem('userlat'),
             userLon: localStorage.getItem('userlon'),
+            distancia: distanciaKM
         })
-
-        const distanciaKM = this.Dist(lat,lon,this.state.userLat, this.state.userLon)
-
-        alert(distanciaKM)
 
         this.pegaProdutosBase()
         
@@ -126,56 +135,80 @@ class Home extends Component {
 
     render() {
         const data = ()=> Array.from(this.state.produtos)
-        return (
-            <div>
-            <ToastContainer
-                  position="top-right"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  />
-                  
-            <Container className={'marginTopo marginbaixo' }>
-                <div className={'titulo'}>
-                    Faça seu Pedido
+        const distancia = this.state.distancia;
+        if (distancia > 15) {
+            return(
+                <div>
+                    <Container className={'marginTopo marginbaixo' }>
+                    <Typography variant="subtitle1" gutterBottom>
+                        Infelizmente não conseguimos entregar na sua localização, Caso queira retirar entre em contato comigo pelo botão do whatsapp :)
+                    </Typography>
+                        <img src="https://cliply.co/wp-content/uploads/2019/03/371903340_LOCATION_MARKER_400.gif" alt={''} className={'centro'} />
+                    </Container>
                 </div>
-                {data().map(
-                    (doc)=>{
-                        if (doc.quantidadeEstoque > 0) {
-                            return(
-                           
-                                <div key={doc.id}>
-                                
-                                    <Cards  
-                                        avatar={doc.categoria.substring(0,1)}   
-                                        titulo={doc.nome} 
-                                        subtitulo={doc.categoria}
-                                        conteudocartao={doc.descricao}
-                                        titulodescricao="Titulo da descrição" 
-                                        conteudodescricao="conteudo da descrição"
-                                        id={doc.id} 
-                                        quantidade={doc.quantidadeEstoque}
-                                        img={doc.imagem}
-                                        valor={'R$ '+doc.valor}
-                                        doc={doc}
-                                        click={()=>this.addCarrinho(doc.id,doc)}
-                                        ></Cards>
+            )
+            
+        }else{
+            return (
+                <div>
+                <ToastContainer
+                      position="top-right"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      />
+                      
+                <Container className={'marginTopo marginbaixo' }>
+                    <div className={'titulo'}>
+                        Faça seu Pedido
+                    </div>
+                    <CardHorizontal/>
+
+
+                    {data().map(
+                        (doc)=>{
+                            if (doc.quantidadeEstoque > 0) {
+                                return(
+                               
+                                    <div key={doc.id}>
                                     
-                                </div>
-                            )
+                                        <Cards  
+                                            avatar={doc.categoria.substring(0,1)}   
+                                            titulo={doc.nome} 
+                                            subtitulo={doc.categoria}
+                                            conteudocartao={doc.descricao}
+                                            titulodescricao="Titulo da descrição" 
+                                            conteudodescricao="conteudo da descrição"
+                                            id={doc.id} 
+                                            quantidade={doc.quantidadeEstoque}
+                                            img={doc.imagem}
+                                            valor={'R$ '+doc.valor}
+                                            doc={doc}
+                                            click={()=>this.addCarrinho(doc.id,doc)}
+                                            ></Cards>
+                                        
+                                    </div>
+                                )
+                            }
                         }
-                    }
-                )}
-                
-                
-            </Container>
-            </div>
-        );
+                    )}
+                    
+                    
+                </Container>
+                </div>
+            );
+        }
+
+
+
+
+
+        
     }
 }
 

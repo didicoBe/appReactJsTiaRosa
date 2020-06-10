@@ -20,7 +20,6 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import Grow from '@material-ui/core/Grow';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -74,7 +73,7 @@ class Carrinho extends Component {
             )
         }
         
-
+        console.log(this.state)
         //JSON.parse()
         
 
@@ -88,15 +87,19 @@ class Carrinho extends Component {
     calculartotal = ()=>{
         
         const valor = this.state.produtos;
-        const data = ()=> Array.from(valor)
-        var total = 0;
-        data().map(
-            (doc)=>{
-                total = (total + parseFloat(doc.valor.replace(",",".")))
-               
-            })
+        console.log(valor)
+        if(valor !== null){
+            const data = ()=> Array.from(valor)
+            var total = 0;
+            data().map(
+                (doc)=>{
+                    total = (total + parseFloat(doc.valor.replace(",",".")))
+                   
+                })
+            
+            return total;
+        }
         
-        return total;
     }
 
     async removeqntFirebase(produto){
@@ -189,6 +192,8 @@ class Carrinho extends Component {
             const number = '5511982491715'
             const message = textomsg
             //
+            this.handleClose()
+            window.location.reload();
             window.open('https://api.whatsapp.com/send?phone=' + number + '&text=%20' + message, '_blank');
         }
         
@@ -207,8 +212,8 @@ class Carrinho extends Component {
 
         const data = ()=> Array.from(valor)
         const total = this.calculartotal()
-
-        if (this.state.produtos === '') {
+        console.log(this.state)
+        if (this.state.produtos === '' || this.state.produtos ===[]) {
             return(
                 <Container className={'marginTopo marginbaixo' }>
                     <div className={'titulo'}>

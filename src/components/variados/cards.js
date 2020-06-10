@@ -18,7 +18,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const useStyles = (theme) => ({
     root: {
-        marginTop: 20
+        marginTop: 20,
+        with:300
     },
     media: {
       height: 0,

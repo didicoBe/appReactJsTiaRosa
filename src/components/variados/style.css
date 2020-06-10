@@ -1,0 +1,13 @@
+.scrolling{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x:auto;
+    height: 350px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.cartao{
+    flex: 0 0 auto;
+    width: 250px;
+}

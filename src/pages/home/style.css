@@ -1,3 +1,10 @@
 .marginbaixo{
     margin-bottom: 50px;
 }
+.centro {
+    width:300px;
+    height:300px;
+    position:fixed;
+    top:20%;
+    left:20%;
+    }
