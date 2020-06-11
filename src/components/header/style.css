@@ -4,11 +4,12 @@ a {
   }
 
 .root {
-    flex-grow: 1,
+    flex-grow: 1
 }
 
 .menuButton {
-    margin-right: 2px,
+    margin-right: 2px;
+    font-size: 35px !important;
 }
 
 .title {
@@ -20,14 +21,14 @@ a {
 }
 
 .list {
-    width: 250px,
+    width: 250px
 }
 
 .fullList {
-  width: 'auto',
+  width: 'auto'
 }
 
 .titleMenu{
-    padding:10px,
-    font
+    padding:10px
+    
 }

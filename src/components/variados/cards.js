@@ -13,7 +13,7 @@ import { red } from '@material-ui/core/colors';
 import BubbleChartIcon from '@material-ui/icons/BubbleChart';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import 'react-toastify/dist/ReactToastify.css';
-
+import "./style.css";
 
 
 const useStyles = (theme) => ({
@@ -22,8 +22,7 @@ const useStyles = (theme) => ({
         with:300
     },
     media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
+      height: 300,
     },
     expand: {
       transform: 'rotate(0deg)',
@@ -77,47 +76,32 @@ class Cards extends Component {
         return (
             <div>
                 
-                <Card className={classes.root}>
-                    <CardHeader
-                    avatar={
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                        {this.props.avatar}
-                        </Avatar>
-                    }
-                    action={
-                        <IconButton aria-label="settings" className={classes.font}>
-                        {this.props.valor}
-                        </IconButton>
-                    }
-                    title={<div className={classes.fontG}>{this.props.titulo}</div>}
-                    subheader={this.props.subtitulo}
-                    
-                    />
+                <Card className={'geral'}>
                     <CardMedia
                     className={classes.media}
                     image={this.props.img}
                     title="Paella dish"
                     />
 
-                    <CardContent>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                          {this.props.conteudocartao}
-                      </Typography>
-                    </CardContent>
-
-                    <CardActions disableSpacing>
+                    <CardActions disableSpacing className={'espaco'}>
 
 
                       <IconButton aria-label="visualizar"
-                              onClick={this.props.click}>
-                              <AddShoppingCartIcon />           
+                              onClick={this.props.click} style={{marginTop:15}}>
+                              <AddShoppingCartIcon style={{ color:'#da9d9d',fontSize:30 }}/>           
                       </IconButton>
 
-                      <IconButton 
-                          aria-label="Quantidade"
-                          className={clsx(classes.expand)}>
-                          <BubbleChartIcon />
-                          {this.props.quantidade}
+
+                      <Typography variant="subtitle2" gutterBottom style={{ fontWeight: 400, color:'#da9d9d', marginTop:15}}>
+                        <div style={{ fontWeight: 600, color:'#c5837b', fontSize:15, marginTop:10}}>{this.props.subtitulo}</div>
+                        
+                        <div style={{ fontWeight: 300, color:'#c5837b', fontSize:15, marginTop:10}}>{this.props.titulo}</div>
+
+                      </Typography>
+
+
+                      <IconButton>
+                        <div style={{ fontWeight: 600, color:'#da9d9d', fontSize:15, marginTop:10}}> {this.props.valor} </div>
                       </IconButton>
 
                     </CardActions>

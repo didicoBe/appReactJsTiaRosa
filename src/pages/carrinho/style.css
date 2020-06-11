@@ -18,3 +18,14 @@
   .imagem{
     width: 100%;
   }
+  .tituloCarrinho{
+    font-size: 30px;
+    font-weight: 300;
+    color: #c5837b;
+
+  }
+
+  .botaoCarrinho{
+    background-color: #c5837b !important;
+    color: #FFF !important;
+  }

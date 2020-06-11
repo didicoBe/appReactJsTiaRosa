@@ -1,0 +1,19 @@
+.cardscrollimg{
+    height: 400px;
+    border-radius: 25px;
+    
+}
+.geral{
+    border-radius: 25px 25px 15px 15px !important;
+}
+.espaco{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.botao{
+    color: #da9d9d;
+}
+.texto{
+    font-weight: 100;
+}

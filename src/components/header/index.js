@@ -71,14 +71,14 @@ const  useStyles = theme => ({
           marginTop: 10
       },
       primary:{
-          fontSize:20,
+          fontSize:35,
           fontWeight:'200',
           color:'#c5837b',
           marginLeft: 20
 
       },
       ico:{
-        fontSize:20,
+        fontSize:25,
         fontWeight:'200',
         color:'#c5837b',
       }
@@ -239,9 +239,9 @@ class Header extends Component {
                 <AppBar position="fixed" className={classes.topcolor}>
                     <Toolbar className={classes.top}>
                         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
-                            <MenuOpenIcon />
+                            <MenuOpenIcon  style={{fontSize:35}} />
                         </IconButton>
-                        <Typography variant="h6" className={classes.title}>
+                        <Typography variant="h5" className={classes.title}>
                             <a href={`/`} className={classes.link}>
                                 Rosa Doces
                             </a>
@@ -249,7 +249,7 @@ class Header extends Component {
                         <Button color="inherit">
 
                             <a href={this.state.url} className={classes.link}>
-                                {this.state.logado ?   <SettingsIcon/>: <AccountCircleIcon/>}
+                                {this.state.logado ?   <SettingsIcon style={{fontSize:35}} />: <AccountCircleIcon style={{fontSize:35}} />}
                             </a>
                         </Button> 
                     </Toolbar>

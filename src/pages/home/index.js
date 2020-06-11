@@ -164,11 +164,12 @@ class Home extends Component {
                       />
                       
                 <Container className={'marginTopo marginbaixo' }>
-                    <div className={'titulo'}>
+                    
+                    <CardHorizontal/>
+                    
+                    <div className={'tituloHome'}>
                         Faça seu Pedido
                     </div>
-                    <CardHorizontal/>
-
 
                     {data().map(
                         (doc)=>{

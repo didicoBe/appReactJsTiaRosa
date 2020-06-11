@@ -12,7 +12,7 @@ import './style.css'
 
 const useStyles = (theme) =>({
     root: {
-      width: 500,
+      width: 600,
       
     },
     stickToBottom: {
@@ -63,16 +63,16 @@ class Footer extends Component {
                 >
                     
                     <BottomNavigationAction 
-                        color="secondary" 
+                         
                         icon={
-                            <ShoppingBasketIcon />
+                            <ShoppingBasketIcon style={{fontSize:25, color:"#da9d9d"}}/>
                         }
                         label="Carrinho"
                         onClick={()=>(window.location.replace('/carrinho'))}
                         />
                     
-                    <BottomNavigationAction label="Ligar" href="tel:+5511992638184" color="secondary" icon={<PhoneAndroidIcon />} />
-                    <BottomNavigationAction label="Whatsapp" color="secondary" icon={<WhatsAppIcon />} onClick={this.WhatsApp} />
+                    <BottomNavigationAction label="Ligar" href="tel:+5511992638184"  icon={<PhoneAndroidIcon style={{fontSize:25, color:"#da9d9d"}}/>} />
+                    <BottomNavigationAction label="Whatsapp"  icon={<WhatsAppIcon style={{fontSize:25, color:"#da9d9d"}}/>} onClick={this.WhatsApp} />
                 </BottomNavigation>
             </div>
         );

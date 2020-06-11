@@ -41,7 +41,34 @@ const useStyles = (theme) => ({
     },
     espaco:{
         marginTop:20
+    },
+    itenscarrinho:{
+        fontWeight:100,
+        color:'#c5837b',
+        marginTop:10
+    },
+    lista:{
+        color:'#b3675d',
+        
+    },
+    listaFonte:{
+        fontSize:18
+    },
+    preco:{
+        textAlign:'right',
+        fontSize:18
+    },
+    total:{
+        fontSize:18,
+        fontWeight:100,
+        color:'#b3675d',
+    },
+    valorTotal:{
+        fontSize:18,
+        fontWeight:100,
+        color:'#b3675d',
     }
+
   });
 
 
@@ -213,14 +240,14 @@ class Carrinho extends Component {
         const data = ()=> Array.from(valor)
         const total = this.calculartotal()
         console.log(this.state)
-        if (this.state.produtos === '' || this.state.produtos ===[]) {
+        if (this.state.produtos === '' || this.state.produtos.length === 0) {
             return(
                 <Container className={'marginTopo marginbaixo' }>
-                    <div className={'titulo'}>
+                    <div className={'tituloCarrinho'}>
                         Carrinho
                     </div>
                     <Divider className={classes.espaco} />
-                    <Typography variant="button" className={classes.espaco}>
+                    <Typography variant="button" className={classes.espaco,classes.valorTotal}>
                         Seu carrinho está vazio
                     </Typography>
                         <img src='https://cdn.dribbble.com/users/2046015/screenshots/4591856/first_white_girl_drbl.gif' alt="carrinho vazio" className='imagem'/>
@@ -229,15 +256,15 @@ class Carrinho extends Component {
         } else {
             return (
                 <Container className={'marginTopo marginbaixo' }>
-                    <div className={'titulo'}>
+                    <div className={'tituloCarrinho'}>
                         Carrinho
                     </div>
                     <Divider className={classes.espaco} />
                    
-                    <Typography variant="h6" className={classes.espaco}>
+                    <Typography variant="h6" className={classes.espaco, classes.itenscarrinho}>
                         Itens do Carrinho
                     </Typography>
-                    <List dense className={classes.root}>
+                    <List dense className={classes.root, classes.lista}>
                     {
                         data().map(
                                 (doc,indice)=>{
@@ -250,13 +277,14 @@ class Carrinho extends Component {
                                                         <Avatar
                                                             alt={`Avatar n°`}
                                                             src={doc.imagem}
+                                                            style={{width:60,height:60, marginRight:15}}
                                                         />
                                                     </ListItemAvatar>
-                                                    <ListItemText primary={doc.nome} />
-                                                    <ListItemText primary={doc.valor} />
+                                                    <ListItemText primary={<div className={classes.listaFonte}>{doc.nome}</div>} />
+                                                    <ListItemText primary={<div className={classes.preco}>{doc.valor}</div>} />
                                                     <ListItemSecondaryAction>
                                                     <IconButton edge="end" aria-label="delete" onClick={()=>this.removeIten(indice)}>
-                                                        <ClearIcon/>
+                                                        <ClearIcon style={{ fontWeight: 300, color:'#c5837b'}}/>
                                                     </IconButton>
                                                     </ListItemSecondaryAction>
                                                 </ListItem>
@@ -272,19 +300,19 @@ class Carrinho extends Component {
                     <Divider className={classes.espaco} />
                     <Grid container spacing={3} className={classes.espaco}>
                         <Grid item xs={6}>
-                            <Typography variant="overline" className={classes.espaco}>
+                            <Typography variant="overline" className={classes.espaco, classes.total}>
                                 Total 
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
-                            <Typography variant="button" className={classes.espaco}>
+                            <Typography variant="button" className={classes.espaco,classes.valorTotal}>
                                 R$ {parseFloat(total).toFixed(2).replace(".",",")}
                             </Typography>
                         </Grid>
                     </Grid>
                     <Grid container spacing={3} className={classes.espaco}>
                         <Grid item xs={12}>
-                            <Button variant="contained" size="large" color="primary" className={classes.margin} onClick={this.finalizar}>
+                            <Button variant="contained" size="large" className={'botaoCarrinho'} onClick={this.finalizar} fullWidth>
                                 Finalizar
                             </Button>
                         </Grid>
