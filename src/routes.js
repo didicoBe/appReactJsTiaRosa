@@ -8,6 +8,7 @@ import Criar from "./pages/produto/criar";
 import Deletar from "./pages/produto/deletar";
 import Estoque from "./pages/produto/estoque";
 import Carrinho from "./pages/carrinho";
+import Destaque from "./pages/produto/destaques";
 
 
 const Routes = ()=>(
@@ -21,6 +22,7 @@ const Routes = ()=>(
                 <Route exact path="/produto/criar" component={Criar}></Route>
                 <Route exact path="/produto/deletar" component={Deletar}></Route>
                 <Route exact path="/produto/estoque" component={Estoque}></Route>
+                <Route exact path="/produto/destaque" component={Destaque}></Route>
                 <Route exact path="/carrinho" component={Carrinho}></Route>
             </Switch>
         </BrowserRouter>

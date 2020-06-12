@@ -14,18 +14,30 @@ p{
     padding: 5px;
     font-weight: 500;
     margin-bottom: 5px;
+    color: lightcoral;
 }
 .linka {
-    color: #f44336 !important;
+    color: #FFFFFF !important;
     text-decoration: none;
 }
 
 .linka:hover 
 {
-     color:#f44336 !important; 
+     color:#FFFFFF !important; 
      text-decoration:none; 
      cursor:pointer;  
 }
 .papel{
     padding: 15px;
+}
+.botaoSair{
+    background-color: lightcoral !important;
+    color:#FFFFFF !important;
+}
+.admintitulo{
+    font-weight: 200 !important;
+    color: lightcoral;
+}
+.adminsubtitulo{
+    color: lightcoral;
 }
