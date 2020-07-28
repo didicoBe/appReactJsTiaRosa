@@ -4,7 +4,6 @@
   "private": true,
   
   "dependencies": {
-    "@bit/bcc.components.bcc-alert": "^1.0.0",
     "@bit/davidhu2000.react-spinners.pacman-loader": "^0.5.1",
     "@bit/joshwaiam.forlina-ui.form-fields": "0.0.1",
     "@bit/muicss.mui.form": "^0.9.41",
