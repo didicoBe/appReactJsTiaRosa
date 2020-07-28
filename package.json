@@ -2,7 +2,7 @@
   "name": "tiarosa",
   "version": "0.1.0",
   "private": true,
-  "baseURL": "http://localhost/tiaRosa/",
+  
   "dependencies": {
     "@bit/bcc.components.bcc-alert": "^1.0.0",
     "@bit/davidhu2000.react-spinners.pacman-loader": "^0.5.1",
